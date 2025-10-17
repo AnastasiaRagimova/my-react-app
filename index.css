@@ -1,31 +1,71 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-
 body {
-  margin: 0;
+  background: linear-gradient(to bottom right, #b3d9ff, #e6f0ff);
+  font-family: "Poppins", sans-serif;
 }
-ul{
-  margin: 0;
+
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.todo-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.input-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.input-section input {
+  padding: 0.5rem;
+  width: 200px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-right: 0.5rem;
+}
+
+.input-section button {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.input-section button:hover {
+  background-color: #357ab8;
+}
+
+ul {
+  list-style-type: none;
   padding: 0;
 }
 
-li{
-  list-style-type: none;
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0;
 }
 
-.red-text{
-  color:red;
-}
-.green-text{
-  color:green;
+li.completed span {
+  text-decoration: line-through;
+  color: gray;
 }
 
+li button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: red;
+  font-size: 1rem;
+}

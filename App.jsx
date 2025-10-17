@@ -1,108 +1,56 @@
 import { useState } from "react";
 
-export default function App() {
-  const [count,setCount] =useState(0);
+function App() {
+  const [tasks, setTasks] = useState([]);
+  const [newTask, setNewTask] = useState("");
 
-  const handleIncrease =()=> {
-    setCount (count+1);
+  const addTask = () => {
+    if (newTask.trim() === "") return;
+    setTasks([...tasks, { text: newTask, completed: false }]);
+    setNewTask("");
   };
 
-  const handleDecrease=() => {
-    setCount (count-1);
-  }
+  const toggleTask = (index) => {
+    const updated = tasks.map((task, i) =>
+      i === index ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updated);
+  };
 
-  return(
-    <>
-    <button onClick={handleIncrease}>increase</button>
-    <button onClick={handleDecrease}>decrease </button>
-    <h2>current count is {count}</h2>
+  const deleteTask = (index) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
 
+  return (
+    <div className="app">
+      <div className="todo-container">
+        <h1> To-Do List </h1>
+        <div className="input-section">
+          <input
+            type="text"
+            placeholder="Enter a new task..."
+            value={newTask}
+            onChange={(e) => setNewTask(e.target.value)}
+          />
+          <button onClick={addTask}>Add</button>
+        </div>
 
-    </>
+        <ul>
+          {tasks.map((task, index) => (
+            <li key={index} className={task.completed ? "completed" : ""}>
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => toggleTask(index)}
+              />
+              <span>{task.text}</span>
+              <button onClick={() => deleteTask(index)}>❌</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
-
 }
 
-// export default function App() {
-//   const [value, setValue] = useState("");
-//   const [items, setItems] = useState([]);
-
-//   const handleInputChange = (event) => {
-//     setValue(event.target.value);
-//   }
-
-//   const handleSaveItem = () => {
-//     if (value === "") {
-//       alert("Value must not be empty!");
-//     } else {
-//       console.log("User wants to save ----->", value);
-//       const newItems = [...items, value];
-//       setItems(newItems);
-//       setValue("");
-//     }
-//   };
-//   const handleDeleteItem=(indexToDelete)=>{
-//     const newArr=items.filter((_, index)=> index !==indexToDelete);
-//     setItems(newArr);
-//   }
-
-//   return (
-//     <>
-//       <input 
-//         type="text" 
-//         placeholder="Enter text"
-//         value={value} 
-//         onChange={handleInputChange} 
-//       />
-//       <button onClick={handleSaveItem}>Save</button>
-//       <ul>
-//         {items.map((item,index) => {
-//         return(
-//           <li className={()}>
-//             {item}
-//             <button onClick={() => handleDeleteItem(item)}>delete</button>
-//           </li>
-//         );
-//         })}
-//      </ul>
-//     </>
-//   );
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function App() {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <div className="container">
-//       <div className="button-group">
-//         <button onClick={() => setCount(count + 1)}>Increase</button>
-//         <button onClick={() => setCount(count - 1)}>Decrease</button>
-//       </div>
-//       <h1>Count is {count}</h1>
-//     </div>
-//   );
-// }
-
-// export default App;
+export default App;
