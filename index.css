@@ -1,71 +1,106 @@
 body {
-  background: linear-gradient(to bottom right, #b3d9ff, #e6f0ff);
+  margin: 0;
   font-family: "Poppins", sans-serif;
 }
 
-.app {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.container {
+  background-color: #f8cde0;
   height: 100vh;
-}
-
-.todo-container {
-  background: white;
-  padding: 2rem;
-  border-radius: 16px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.input-section {
   display: flex;
   justify-content: center;
-  margin-bottom: 1rem;
-}
-
-.input-section input {
-  padding: 0.5rem;
-  width: 200px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  margin-right: 0.5rem;
-}
-
-.input-section button {
-  background-color: #4a90e2;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.input-section button:hover {
-  background-color: #357ab8;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: flex;
   align-items: center;
+}
+
+.form-box {
+  background-color: white;
+  padding: 30px 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 350px;
+}
+
+.form-box h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 22px;
+  color: #222;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.input-group label {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group input[type="password"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #7c3aed;
+}
+
+.gender-options {
+  display: flex;
   justify-content: space-between;
-  padding: 0.4rem 0;
+  font-size: 14px;
 }
 
-li.completed span {
-  text-decoration: line-through;
-  color: gray;
+.checkbox {
+  font-size: 13px;
 }
 
-li button {
-  background: none;
+.btn {
+  width: 100%;
+  background-color: #6366f1;
+  color: white;
+  padding: 10px;
   border: none;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
+  margin-top: 5px;
+}
+
+.btn:hover {
+  background-color: #4f46e5;
+}
+
+.error {
   color: red;
-  font-size: 1rem;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.success-box {
+  background-color: white;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  width: 350px;
+}
+
+.success-box h1 {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.success-box p {
+  color: #555;
+  font-size: 15px;
+  line-height: 1.4;
 }
