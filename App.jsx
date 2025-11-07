@@ -1,170 +1,89 @@
 import { useState } from "react";
+const sampleCards = [
+  {
+    id: 1,
+    title: "Ocean Retreat",
+    description:
+      "Calming blue tones and gentle waves. Perfect for focus or relaxation.",
+    image:
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
+    tag: "Nature",
+  },
+  {
+    id: 2,
+    title: "City Nights",
+    description:
+      "Skylines, neon, and late-night vibes for your urban inspiration.",
+    image:
+      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop",
+    tag: "Urban",
+  },
+  {
+    id: 3,
+    title: "Forest Walk",
+    description:
+      "A path through pines and light — take a breath and reset.",
+    image:
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop",
+    tag: "Outdoors",
+  },
+  {
+    id: 4,
+    title: "Minimal Desk",
+    description:
+      "Clutter-free workspace for deep work and clean aesthetics.",
+    image:
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
+    tag: "Workspace",
+  },
+  {
+    id: 5,
+    title: "Golden Desert",
+    description:
+      "Warm sands and endless dunes to spark wanderlust.",
+    image:
+      "https://images.unsplash.com/photo-1551516594-56cb78394645?q=80&w=1200&auto=format&fit=crop",
+    tag: "Travel",
+  },
+  {
+    id: 6,
+    title: "Cozy Reading",
+    description:
+      "Soft light, hot tea, and your favorite book.",
+    image:
+      "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1200&auto=format&fit=crop",
+    tag: "Lifestyle",
+  },
+];
 
+export default function App() {
+  return (
+    <>
+      <div className="top-bar">
+        <h1>Grid Cards</h1>
+      </div>
 
-
- 
-
-function App() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    gender: "",
-    terms: false,
-  });
-
-  const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === "checkbox" ? checked : value,
-    });
-  };
-
-  const validate = () => {
-    const newErrors = {};
-    if (!formData.fullName.trim()) newErrors.fullName = "Full name is required";
-    if (!formData.email.includes("@")) newErrors.email = "Enter a valid email";
-    if (formData.password.length < 6)
-      newErrors.password = "Password must be at least 6 characters";
-    return newErrors;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    setErrors({});
-    setSubmitted(true);
-  };
-
-  if (submitted) {
-    return (
       <div className="container">
-        <div className="success-box">
-          <h1>Registration Successfully</h1>
-          <p>
-            Welcome <strong>{formData.fullName}</strong>! <br />
-            Your account has been created.
-          </p>
+        <h3 className="subtitle">Explore</h3>
+        <div className="grid">
+          {sampleCards.map((card) => (
+            <div key={card.id} className="card">
+              <div className="image-container">
+                <img src={card.image} alt={card.title} />
+                <span className="tag">{card.tag}</span>
+              </div>
+              <div className="card-content">
+                <h4>{card.title}</h4>
+                <p>{card.description}</p>
+              </div>
+              <div className="card-actions">
+                <button className="like"> Like</button>
+                <button className="open">Open</button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-    );
-  }
-
-  return (
-    <div className="container">
-      <form className="form-box" onSubmit={handleSubmit}>
-        <h2>Register</h2>
-
-        <div className="input-group">
-          <label>Full Name</label>
-          <input
-            type="text"
-            name="fullName"
-            value={formData.fullName}
-            onChange={handleChange}
-            placeholder="Enter your full name"
-          />
-          {errors.fullName && <p className="error">{errors.fullName}</p>}
-        </div>
-
-        <div className="input-group">
-          <label>Email Address</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            placeholder="you@example.com"
-          />
-          {errors.email && <p className="error">{errors.email}</p>}
-        </div>
-
-        <div className="input-group">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            placeholder="Enter password"
-          />
-          {errors.password && <p className="error">{errors.password}</p>}
-        </div>
-
-        <div className="input-group">
-          <label>Confirm Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            placeholder="Confirm password"
-          />
-        </div>
-
-        <div className="input-group">
-          <label>Gender</label>
-          <div className="gender-options">
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                checked={formData.gender === "male"}
-                onChange={handleChange}
-              />{" "}
-              Male
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                checked={formData.gender === "female"}
-                onChange={handleChange}
-              />{" "}
-              Female
-            </label>
-            <label>
-              <input
-                type="radio"
-                name="gender"
-                value="other"
-                checked={formData.gender === "other"}
-                onChange={handleChange}
-              />{" "}
-              Other
-            </label>
-          </div>
-        </div>
-
-        <div className="input-group checkbox">
-          <label>
-            <input
-              type="checkbox"
-              name="terms"
-              checked={formData.terms}
-              onChange={handleChange}
-            />{" "}
-            I agree to the terms and conditions
-          </label>
-        </div>
-
-        <button type="submit" className="btn">
-          Sign Up
-        </button>
-      </form>
-    </div>
+    </>
   );
 }
-
-export default App;
