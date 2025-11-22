@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useEffect , useState } from "react";
 
 const sampleCards = [
   {
@@ -66,7 +66,7 @@ const sampleCards = [
 export default function App() {
   const [likedCards, setLikedCards] = useState([]);
 
-  // Toggle like/unlike
+  
   const toggleLike = (cardId) => {
     setLikedCards((prev) =>
       prev.includes(cardId)
@@ -75,7 +75,6 @@ export default function App() {
     );
   };
 
-  // Total price of liked cards
   const totalLikedPrice = sampleCards
     .filter((card) => likedCards.includes(card.id))
     .reduce((sum, card) => sum + card.price, 0);
