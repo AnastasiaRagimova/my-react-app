@@ -130,3 +130,20 @@ body {
 .open:hover {
   background: #1e40af;
 }
+.card-actions {
+  display: flex;
+  justify-content: flex-start; /* buttons closer together */
+  gap: 8px; /* small gap */
+  border-top: 1px solid #eee;
+  padding: 8px 12px; /* smaller height */
+}
+
+/* Make buttons smaller */
+.card-actions button {
+  border: none;
+  border-radius: 4px; /* less rounded like picture */
+  padding: 4px 10px; /* smaller buttons */
+  cursor: pointer;
+  font-size: 13px; /* slightly smaller text */
+  font-weight: 500;
+}

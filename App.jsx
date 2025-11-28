@@ -1,4 +1,4 @@
-import {useEffect , useState } from "react";
+import { useState } from "react";
 
 const sampleCards = [
   {
@@ -65,8 +65,8 @@ const sampleCards = [
 
 export default function App() {
   const [likedCards, setLikedCards] = useState([]);
+  const [sortOption, setSortOption] = useState(""); // sorting state
 
-  
   const toggleLike = (cardId) => {
     setLikedCards((prev) =>
       prev.includes(cardId)
@@ -79,6 +79,14 @@ export default function App() {
     .filter((card) => likedCards.includes(card.id))
     .reduce((sum, card) => sum + card.price, 0);
 
+  // SORTING LOGIC
+  const sortedCards = [...sampleCards].sort((a, b) => {
+    if (sortOption === "low-high") return a.price - b.price;
+    if (sortOption === "high-low") return b.price - a.price;
+    if (sortOption === "title-az") return a.title.localeCompare(b.title);
+    return 0;
+  });
+
   return (
     <>
       <div className="top-bar">
@@ -86,10 +94,29 @@ export default function App() {
       </div>
 
       <div className="container">
-        <h3 className="text">Explore</h3>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <h3 className="text">Explore</h3>
+
+          {/* SORT DROPDOWN */}
+          <select
+            value={sortOption}
+            onChange={(e) => setSortOption(e.target.value)}
+            style={{
+              padding: "8px",
+              borderRadius: "6px",
+              border: "1px solid #ddd",
+              fontSize: "14px",
+            }}
+          >
+            <option value="">Sort by...</option>
+            <option value="low-high">Price: Low → High</option>
+            <option value="high-low">Price: High → Low</option>
+            <option value="title-az">Title: A → Z</option>
+          </select>
+        </div>
 
         <div className="grid">
-          {sampleCards.map((card) => {
+          {sortedCards.map((card) => {
             const isLiked = likedCards.includes(card.id);
             return (
               <div key={card.id} className="card">
@@ -97,13 +124,20 @@ export default function App() {
                   <img src={card.image} alt={card.title} />
                   <span className="tag">{card.tag}</span>
                 </div>
+
                 <div className="card-content">
-                  <h4 style={{ display: "flex", justifyContent: "space-between" }}>
+                  <h4
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
                     <span>{card.title}</span>
                     <span>${card.price}</span>
                   </h4>
                   <p>{card.description}</p>
                 </div>
+
                 <div className="card-actions">
                   <button className="like" onClick={() => toggleLike(card.id)}>
                     {isLiked ? "Unlike" : "Like"}
