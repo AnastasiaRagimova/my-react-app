@@ -65,7 +65,7 @@ const sampleCards = [
 
 export default function App() {
   const [likedCards, setLikedCards] = useState([]);
-  const [sortOption, setSortOption] = useState(""); // sorting state
+  const [sortOption, setSortOption] = useState(""); 
 
   const toggleLike = (cardId) => {
     setLikedCards((prev) =>
@@ -79,7 +79,7 @@ export default function App() {
     .filter((card) => likedCards.includes(card.id))
     .reduce((sum, card) => sum + card.price, 0);
 
-  // SORTING LOGIC
+
   const sortedCards = [...sampleCards].sort((a, b) => {
     if (sortOption === "low-high") return a.price - b.price;
     if (sortOption === "high-low") return b.price - a.price;
@@ -97,7 +97,6 @@ export default function App() {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <h3 className="text">Explore</h3>
 
-          {/* SORT DROPDOWN */}
           <select
             value={sortOption}
             onChange={(e) => setSortOption(e.target.value)}

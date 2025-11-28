@@ -132,18 +132,18 @@ body {
 }
 .card-actions {
   display: flex;
-  justify-content: flex-start; /* buttons closer together */
-  gap: 8px; /* small gap */
+  justify-content: flex-start; 
+  gap: 8px; 
   border-top: 1px solid #eee;
-  padding: 8px 12px; /* smaller height */
+  padding: 8px 12px; 
 }
 
-/* Make buttons smaller */
+
 .card-actions button {
   border: none;
-  border-radius: 4px; /* less rounded like picture */
-  padding: 4px 10px; /* smaller buttons */
+  border-radius: 4px;
+  padding: 4px 10px; 
   cursor: pointer;
-  font-size: 13px; /* slightly smaller text */
+  font-size: 13px;
   font-weight: 500;
 }
