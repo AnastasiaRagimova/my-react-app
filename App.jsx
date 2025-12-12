@@ -1,199 +1,79 @@
-import { useState } from "react";
-import { createPortal } from "react-dom";
-
-const sampleCards = [
-  {
-    id: 1,
-    title: "Ocean Retreat",
-    description: "Calming blue tones and gentle waves. Perfect for focus or relaxation.",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
-    tag: "Nature",
-    price: 20
-  },
-  {
-    id: 2,
-    title: "City Nights",
-    description: "Skylines, neon, and late-night vibes for your urban inspiration.",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1200&auto=format&fit=crop",
-    tag: "Urban",
-    price: 15
-  },
-  {
-    id: 3,
-    title: "Forest Walk",
-    description: "A path through pines and light — take a breath and reset.",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1200&auto=format&fit=crop",
-    tag: "Outdoors",
-    price: 30
-  },
-  {
-    id: 4,
-    title: "Minimal Desk",
-    description: "Clutter-free workspace for deep work and clean aesthetics.",
-    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1200&auto=format&fit=crop",
-    tag: "Workspace",
-    price: 45
-  },
-  {
-    id: 5,
-    title: "Golden Desert",
-    description: "Warm sands and endless dunes to spark wanderlust.",
-    image: "https://images.unsplash.com/photo-1551516594-56cb78394645?q=80&w=1200&auto=format&fit=crop",
-    tag: "Travel",
-    price: 50
-  },
-  {
-    id: 6,
-    title: "Cozy Reading",
-    description: "Soft light, hot tea, and your favorite book.",
-    image: "https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d?q=80&w=1200&auto=format&fit=crop",
-    tag: "Lifestyle",
-    price: 65
-  }
-];
-
-function Modal({ isOpen, onClose, children }) {
-  if (!isOpen) return null;
-
-  return createPortal(
-    <div className="modal-overlay">
-      <div className="modal-box">
-        {children}
-        <button className="close-btn" onClick={onClose}>Close</button>
-      </div>
-    </div>,
-    document.body
-  );
-}
+import Tabs from "./Tabs.jsx";
+import TabPanel from "./TabPanel.jsx";
+import "./index.css";
 
 export default function App() {
-  const [likedCards, setLikedCards] = useState([]);
-  const [sortValue, setSortValue] = useState("default");
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState(null);
-  const [cards, setCards] = useState(sampleCards);
-
-  const toggleLike = (id) => {
-    setLikedCards((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  };
-
-  const openViewModal = (card) => {
-    setSelectedCard(card);
-    setIsOpen(true);
-  };
-
-  const openDeleteModal = (card) => {
-    setSelectedCard(card);
-    setIsOpen(true);
-  };
-
-  const handleDelete = () => {
-    setCards((prev) => prev.filter((c) => c.id !== selectedCard.id));
-    setLikedCards((prev) => prev.filter((id) => id !== selectedCard.id));
-    setIsOpen(false);
-    setSelectedCard(null);
-  };
-
-  const totalPrice = likedCards
-    .map((id) => cards.find((c) => c.id === id)?.price || 0)
-    .reduce((a, b) => a + b, 0);
-
-  const sortedCards = [...cards].sort((a, b) => {
-    if (sortValue === "low") return a.price - b.price;
-    if (sortValue === "high") return b.price - a.price;
-    if (sortValue === "az") return a.title.localeCompare(b.title);
-    return 0;
-  });
-
   return (
-    <>
-      <div className="top-bar">
-        <h1>Grid Cards</h1>
-      </div>
+    <div className="app">
 
-      <div className="container">
-        <h3 className="text">Explore</h3>
+      <Tabs>
+        <TabPanel title="Home">
+          <h2 className="title">Welcome Home</h2>
+          <p>This is the home tab content. Notice how we're using React children to pass content to the TabPanel component.</p>
 
-        <select className="sort-select" onChange={(e) => setSortValue(e.target.value)}>
-          <option value="default">Sort by...</option>
-          <option value="low">Price: Low → High</option>
-          <option value="high">Price: High → Low</option>
-          <option value="az">Title A → Z</option>
-        </select>
+          <ul>
+            <li>React children allow flexible component composition</li>
+            <li>Children can be any valid React element</li>
+            <li>This makes components reusable and composable</li>
+            <li>The <span className="highlight">props.children</span> prop contains everything between component tags</li>
+          </ul>
 
-        <div className="grid">
-          {sortedCards.map((card) => (
-            <div key={card.id} className="card">
-              <div className="image-container">
-                <img src={card.image} alt={card.title} />
-                <span className="tag">{card.tag}</span>
-              </div>
+          <div className="concept-box">
+            <strong>Key Concept:</strong> The TabPanel component receives its content as children and displays it when the tab is active.
+          </div>
+        </TabPanel>
 
-              <div className="card-content">
-                <h4>{card.title} - {card.price}$</h4>
-                <p>{card.description}</p>
-              </div>
+        <TabPanel title="About">
+          <h2 className="title">About Us</h2>
+          <p>This tab demonstrates how children can contain complex JSX structures. The TabPanel component receives these children and displays them when the tab is active.</p>
 
-              <div className="card-actions">
-                <button
-                  className="like"
-                  onClick={() => toggleLike(card.id)}
-                  style={{
-                    background: likedCards.includes(card.id) ? "black" : "#f3f4f6",
-                    color: likedCards.includes(card.id) ? "white" : "#333",
-                  }}
-                >
-                  {likedCards.includes(card.id) ? "★ Liked" : "♡ Like"}
-                </button>
+          <div className="concept-box">
+            <h3>React Children Concepts:</h3>
+            <ul>
+              <li><span className="highlight">props.children</span> – Contains content written between component tags</li>
+              <li><span className="highlight">Context API</span> – Used here to share state between Tab components</li>
+              <li><span className="highlight">Composition</span> – Building complex UIs from reusable components</li>
+            </ul>
+          </div>
+        </TabPanel>
 
-                <button className="Edit" onClick={() => openViewModal(card)}>View</button>
+        {/* SERVICES — screenshot 3 */}
+        <TabPanel title="Services">
+          <h2 className="title">Our Services</h2>
+          <p>Here are the services we offer:</p>
 
-                <button className="Delete" onClick={() => openDeleteModal(card)}>
-                  Delete
-                </button>
-              </div>
+          <div className="services-row">
+            <div className="service-card">
+              <h3>Service 1</h3>
+              <p>Description of service one. This demonstrates how children can contain complex structures.</p>
             </div>
-          ))}
-        </div>
 
-        <h3 style={{ marginTop: "20px", fontWeight: "700" }}>
-          Liked cards total price is - {totalPrice}$
-        </h3>
-      </div>
+            <div className="service-card">
+              <h3>Service 2</h3>
+              <p>Description of service two. Each TabPanel can have different content structures.</p>
+            </div>
 
-    
-      <Modal isOpen={isOpen && selectedCard} onClose={() => setIsOpen(false)}>
-        {selectedCard && (
-          <>
-            <img
-              src={selectedCard.image}
-              alt={selectedCard.title}
-              className="modal-image"
-            />
+            <div className="service-card">
+              <h3>Service 3</h3>
+              <p>Description of service three. The children prop makes this all possible!</p>
+            </div>
+          </div>
+        </TabPanel>
 
-            <h2>{selectedCard.title}</h2>
-            <p>{selectedCard.description}</p>
-            <p><strong>Price: {selectedCard.price}$</strong></p>
+        <TabPanel title="Contact">
+          <h2 className="title">Contact Us</h2>
+          <p>You can reach us using the details below:</p>
 
-            <button
-              onClick={() => toggleLike(selectedCard.id)}
-              className="modal-like-btn"
-              style={{
-                background: likedCards.includes(selectedCard.id) ? "black" : "#eee",
-                color: likedCards.includes(selectedCard.id) ? "white" : "#333"
-              }}
-            >
-              {likedCards.includes(selectedCard.id) ? "Liked" : " Like"}
-            </button>
+          <div className="concept-box">
+            <ul>
+              <li>Email: support@example.com</li>
+              <li>Phone: +1 (555) 123-4567</li>
+              <li>Address: 1234 React Lane, JavaScript City</li>
+            </ul>
+          </div>
+        </TabPanel>
 
-            <button className="modal-delete" onClick={handleDelete}>
-              Delete
-            </button>
-          </>
-        )}
-      </Modal>
-    </>
+      </Tabs>
+    </div>
   );
 }
